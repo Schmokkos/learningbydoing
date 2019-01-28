@@ -1,3 +1,7 @@
+package no.schweizer;
+
+import no.schweizer.controller.ResultatController;
+
 import java.util.Scanner;
 import java.util.Random;
 
@@ -23,11 +27,6 @@ public class MathTester {
             System.out.println("Wrong! Correct answer was: "+(num1+num2));
         }
     }
-    private static void grade(){
-        double percent = correctAnswers / numberOfQuestions;
-        System.out.print(percent);
-        //Hvorfor funker ikke dette??
-    }
 
     public static void main(String[] args){
 
@@ -46,6 +45,7 @@ public class MathTester {
 
         System.out.println("----------------------");
         System.out.println("Correct answers: "+correctAnswers+"/"+numberOfQuestions);
-        MathTester.grade();
+        ResultatController rc = new ResultatController();
+        System.out.print(rc.prosentResultat(correctAnswers, numberOfQuestions));
     }
 }
