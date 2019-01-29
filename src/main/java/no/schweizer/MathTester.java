@@ -3,6 +3,7 @@ package no.schweizer;
 import no.schweizer.controller.QuestionController;
 import no.schweizer.controller.ResultatController;
 
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 public class MathTester {
@@ -30,7 +31,14 @@ public class MathTester {
 
         System.out.println("----------------------");
         System.out.println("Correct answers: "+correctAnswers+"/"+numberOfQuestions);
+
         ResultatController rc = new ResultatController();
-        System.out.print(rc.prosentResultat(correctAnswers, numberOfQuestions));
+        double percent = rc.prosentResultat(correctAnswers, numberOfQuestions);
+        DecimalFormat numberFormat = new DecimalFormat("0.0");
+
+        char grade = rc.gradeResult(percent);
+
+        System.out.println(numberFormat.format(percent)+" %");
+        System.out.print("That gives you the grade: "+grade);
     }
 }
