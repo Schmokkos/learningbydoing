@@ -7,28 +7,27 @@ public class ResultatController {
     }
 
     public char gradeResult(double prosent) {
-
-        if (prosent <= (100 / 6)) {
+        double base = (100.0 / 6.0);
+        if (prosent <= base) {
             return 'F';
         }
-        else if (prosent <= (100 / 6 * 2)) {
+        else if (prosent <= (base * 2)) {
             return 'E';
         }
-        else if (prosent <= (100 / 6 * 3)) {
+        else if (prosent <= (base * 3)) {
             return 'D';
         }
-        else if (prosent <= (100 / 6 * 4)) {
+        else if (prosent <= (base * 4)) {
             return 'C';
         }
-        else if (prosent <= (100 / 6 * 5)) {
+        else if (prosent <= (base * 5)) {
             return 'B';
         }
-        else if (prosent >= (100 / 6 * 5)){
+        else if (prosent >= (base * 5)){
             return 'A';
         }
         else {
-            return 'X';
+            throw new IllegalArgumentException("Value prosent was "+prosent+" expected double");
         }
     }
-
 }
