@@ -16,11 +16,12 @@ public class MathTester {
         System.out.println("*******************");
         System.out.print("Enter the number of questions you want: ");
         int numberOfQuestions = scan.nextInt();
-        int difficulty = 20;
+        System.out.print("Enter the desired difficulty (1-5): ");
+        int difficulty = scan.nextInt();
+
         boolean result;
         QuestionController qc = new QuestionController();
-        int i;
-        for (i = 1; i <= numberOfQuestions; i++){
+        for (int i = 1; i <= numberOfQuestions; i++){
             result = qc.questionCreator(difficulty);
             if (result){
                 correctAnswers++;

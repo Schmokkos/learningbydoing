@@ -11,6 +11,7 @@ public class ResultatTest {
         ResultatController rc = new ResultatController();
 
         double v = rc.prosentResultat(37, 41);
+        Assert.assertEquals(90.2439, v, 0.00001);
     }
 
     @Test
