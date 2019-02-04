@@ -6,11 +6,11 @@ import no.schweizer.controller.ResultatController;
 import java.text.DecimalFormat;
 import java.util.Scanner;
 
-public class MathTester {
+class MathTester {
     private static int correctAnswers = 0;
     private static Scanner scan = new Scanner(System.in);
 
-    public static void main(String[] args){
+    MathTester(){
 
         System.out.println("Welcome to Math Tester 1.0 :)");
         System.out.println("*******************");
