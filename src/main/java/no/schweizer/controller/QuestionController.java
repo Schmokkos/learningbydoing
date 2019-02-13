@@ -1,5 +1,7 @@
 package no.schweizer.controller;
 
+import no.schweizer.lists.WordList;
+
 import java.util.Random;
 import java.util.Scanner;
 
@@ -92,5 +94,12 @@ public class QuestionController {
             default:
                 throw new IllegalArgumentException("Value operator was "+operator+" expected int 0-4");
         }
+    }
+    public String createWord(int length){
+        Random rword = new Random();
+        WordList wl = new WordList();
+        String[] wordarray = wl.listOfWords(length);
+        int num1 = rword.nextInt(wordarray.length-1);
+        return wordarray[num1];
     }
 }
