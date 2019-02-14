@@ -30,4 +30,20 @@ public class ResultatController {
             throw new IllegalArgumentException("Value prosent was "+prosent+" expected double");
         }
     }
+
+    public boolean isItSolved(boolean[] array){
+        for (boolean b:array) {
+            if (!b) return false;
+        }
+        return true;
+    }
+    public boolean isLetterInWord(char letter, char[] letters){
+        for (char l:letters) {
+            if (l == letter) return true;
+        }
+        return false;
+    }
+    public boolean areYouDead(int wrong, int limit){
+        return (wrong >= limit);
+    }
 }
