@@ -98,8 +98,15 @@ public class QuestionController {
     public String createWord(int length){
         Random rword = new Random();
         WordList wl = new WordList();
-        String[] wordarray = wl.listOfWords(length);
+        if (length == 0){
+        String[] wordarray = wl.listOfSentances();
         int num1 = rword.nextInt(wordarray.length-1);
         return wordarray[num1];
+        }
+        else {
+            String[] wordarray = wl.listOfWords(length);
+            int num1 = rword.nextInt(wordarray.length-1);
+            return wordarray[num1];
+        }
     }
 }

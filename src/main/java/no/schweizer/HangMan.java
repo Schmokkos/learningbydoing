@@ -13,19 +13,28 @@ class HangMan {
     HangMan(){
         System.out.println("Welcome to Hang Man 1.0 :)");
         System.out.println("*******************");
-        System.out.print("Enter the length of the word you want (between 5-7): ");
+        System.out.print("Word or sentence? Enter 0 (zero) for sentence, or the length of the word you want (between 5-7): ");
         int wordLenght = scan.nextInt();
 
-        for (;wordLenght<5 || wordLenght>7;){
-            System.out.print("The length has to be between 5 and 7 letters. Try again:");
-            wordLenght = scan.nextInt();
+        if (wordLenght != 0) {
+            for (; wordLenght < 5 || wordLenght > 7; ) {
+                System.out.print("The length of the word has to be between 5 and 7 letters, or 0 (zero) for sentence. Try again:");
+                wordLenght = scan.nextInt();
+                if (wordLenght == 0){
+                    break;
+                }
+            }
         }
 
         QuestionController qc = new QuestionController();
-        char[] wordarray = qc.createWord(wordLenght).toCharArray();
+        char[] wordarray = qc.createWord(wordLenght).toUpperCase().toCharArray();
         boolean[] correctLetter = new boolean[wordarray.length];
 
         for (int i = 0;i < wordarray.length; i++){
+            if (wordarray[i] == ' '){
+                correctLetter[i] = true;
+                System.out.print("   ");
+            }
             System.out.print("_ ");
         }
         System.out.println();
@@ -35,7 +44,7 @@ class HangMan {
         String inputLetter;
         char letter;
         do {
-            inputLetter = scan.next();
+            inputLetter = scan.next().toUpperCase();
             letter = inputLetter.charAt(0);
             System.out.println();
 
