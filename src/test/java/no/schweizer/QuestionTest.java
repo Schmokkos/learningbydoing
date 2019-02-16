@@ -13,5 +13,7 @@ public class QuestionTest {
         Assert.assertNotNull(qc.createWord(5));
         Assert.assertNotNull(qc.createWord(6));
         Assert.assertNotNull(qc.createWord(7));
+
+        Assert.assertNotNull(qc.createWord(0));
     }
 }
