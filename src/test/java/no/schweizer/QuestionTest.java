@@ -14,6 +14,7 @@ public class QuestionTest {
         Assert.assertNotNull(qc.createWord(6));
         Assert.assertNotNull(qc.createWord(7));
 
+        //Unit test for sentence building
         Assert.assertNotNull(qc.createWord(0));
     }
 }
