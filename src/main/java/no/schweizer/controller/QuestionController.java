@@ -3,13 +3,11 @@ package no.schweizer.controller;
 import no.schweizer.lists.WordList;
 
 import java.util.Random;
-import java.util.Scanner;
 
 public class QuestionController {
 
     public boolean questionCreator(int difficulty){
         Random rnum = new Random();
-        Scanner scan = new Scanner(System.in);
         int numberRange;
         int operatorRange;
 
@@ -50,13 +48,12 @@ public class QuestionController {
         num2++;
         int operator = rnum.nextInt(operatorRange);
         int result1;
+        InputController ic = new InputController();
 
         switch (operator+1) {
             case 1:
                 //This case makes an addition (+) question
-                System.out.println("What is: "+num1+"+"+num2+" ?");
-                result1 = scan.nextInt();
-
+                result1 = ic.simpleDigitInput("What is: "+num1+"+"+num2+" ? : ",0,0, true);
                 if (result1 == num1+num2){
                     System.out.println("Correct!");
                     return true;
@@ -67,9 +64,7 @@ public class QuestionController {
                 }
             case 2:
                 //This case makes an subtraction (-) question
-                System.out.println("What is: "+num1+"-"+num2+" ?");
-                result1 = scan.nextInt();
-
+                result1 = ic.simpleDigitInput("What is: "+num1+"-"+num2+" ? : ", 0, 0, true);
                 if (result1 == num1-num2){
                     System.out.println("Correct!");
                     return true;
@@ -80,9 +75,7 @@ public class QuestionController {
                 }
             case 3:
                 //This case makes a multiplication (*) question
-                System.out.println("What is: "+num1+"x"+num2+" ?");
-                result1 = scan.nextInt();
-
+                result1 = ic.simpleDigitInput("What is: "+num1+"x"+num2+" ? : ", 0, 0, true);
                 if (result1 == num1*num2){
                     System.out.println("Correct!");
                     return true;

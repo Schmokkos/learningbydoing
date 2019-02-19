@@ -1,5 +1,6 @@
 package no.schweizer;
 
+import no.schweizer.controller.InputController;
 import no.schweizer.controller.QuestionController;
 import no.schweizer.controller.ResultatController;
 
@@ -12,12 +13,12 @@ class MathTester {
 
     MathTester(){
 
+        InputController ic = new InputController();
+
         System.out.println("Welcome to Math Tester 1.0 :)");
         System.out.println("*******************");
-        System.out.print("Enter the number of questions you want: ");
-        int numberOfQuestions = scan.nextInt();
-        System.out.print("Enter the desired difficulty (1-5): ");
-        int difficulty = scan.nextInt();
+        int numberOfQuestions = ic.simpleDigitInput("Enter the number of questions you want: ", 0, 0, false);
+        int difficulty = ic.simpleDigitInput("Enter the desired difficulty (1-5): ", 1, 5, false);
 
         boolean result;
         QuestionController qc = new QuestionController();
@@ -40,6 +41,6 @@ class MathTester {
         char grade = rc.gradeResult(percent);
 
         System.out.println(numberFormat.format(percent)+" %");
-        System.out.print("That gives you the grade: "+grade);
+        System.out.println("That gives you the grade: "+grade);
     }
 }

@@ -10,8 +10,10 @@ public class AppSelector {
         System.out.println("2 - HangMan");
         System.out.println("Anything else - Exit");
         System.out.print("Input app number:");
-        int input = scan.nextInt();
-
+        int input = 0;
+        if (scan.hasNextInt()){
+            input = scan.nextInt();
+        }
         if (input == 1){
             new MathTester();
         }
@@ -19,7 +21,7 @@ public class AppSelector {
             new HangMan();
         }
         else {
-            System.out.println("Bye then...");
+            System.out.println("Bye...");
         }
     }
 }
