@@ -1,7 +1,6 @@
 package no.schweizer.controller;
 
 import no.schweizer.lists.WordList;
-
 import java.util.Random;
 
 public class QuestionController {
@@ -49,43 +48,23 @@ public class QuestionController {
         int operator = rnum.nextInt(operatorRange);
         int result1;
         InputController ic = new InputController();
+        ResultatController rc = new ResultatController();
 
         switch (operator+1) {
             case 1:
                 //This case makes an addition (+) question
                 result1 = ic.simpleDigitInput("What is: "+num1+"+"+num2+" ? : ",0,0, true);
-                if (result1 == num1+num2){
-                    System.out.println("Correct!");
-                    return true;
-                }
-                else {
-                    System.out.println("Wrong! Correct answer was: "+(num1+num2));
-                    return false;
-                }
+                return rc.isCalcCorrect(result1, num1+num2);
             case 2:
                 //This case makes an subtraction (-) question
                 result1 = ic.simpleDigitInput("What is: "+num1+"-"+num2+" ? : ", 0, 0, true);
-                if (result1 == num1-num2){
-                    System.out.println("Correct!");
-                    return true;
-                }
-                else {
-                    System.out.println("Wrong! Correct answer was: "+(num1-num2));
-                    return false;
-                }
+                return rc.isCalcCorrect(result1, num1-num2);
             case 3:
                 //This case makes a multiplication (*) question
                 result1 = ic.simpleDigitInput("What is: "+num1+"x"+num2+" ? : ", 0, 0, true);
-                if (result1 == num1*num2){
-                    System.out.println("Correct!");
-                    return true;
-                }
-                else {
-                    System.out.println("Wrong! Correct answer was: "+(num1*num2));
-                    return false;
-                }
+                return rc.isCalcCorrect(result1, num1*num2);
             default:
-                throw new IllegalArgumentException("Value operator was "+operator+" expected int 0-4");
+                throw new IllegalArgumentException("Value operator was "+operator+" expected int 0-2");
         }
     }
     public String createWord(int length){
