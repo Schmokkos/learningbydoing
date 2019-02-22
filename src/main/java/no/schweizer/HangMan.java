@@ -1,5 +1,6 @@
 package no.schweizer;
 
+import no.schweizer.controller.InputController;
 import no.schweizer.controller.QuestionController;
 import no.schweizer.controller.ResultatController;
 
@@ -11,20 +12,10 @@ class HangMan {
 //    private static boolean youDied;
     private static Scanner scan = new Scanner(System.in);
     HangMan(){
+        InputController ic = new InputController();
         System.out.println("Welcome to Hang Man 1.0 :)");
         System.out.println("*******************");
-        System.out.print("Word or sentence? Enter 0 (zero) for sentence, or the length of the word you want (between 5-7): ");
-        int wordLenght = scan.nextInt();
-
-        if (wordLenght != 0) {
-            for (; wordLenght < 5 || wordLenght > 7; ) {
-                System.out.print("The length of the word has to be between 5 and 7 letters, or 0 (zero) for sentence. Try again:");
-                wordLenght = scan.nextInt();
-                if (wordLenght == 0){
-                    break;
-                }
-            }
-        }
+        int wordLenght = ic.simpleDigitInput("Word or sentence? Enter 0 (zero) for sentence, or the length of the word you want (between 5-7): ",5,7,true);
 
         QuestionController qc = new QuestionController();
         char[] wordarray = qc.createWord(wordLenght).toUpperCase().toCharArray();
