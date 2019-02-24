@@ -8,8 +8,6 @@ import java.util.Scanner;
 
 class HangMan {
     private static int wrongAnswers = 0;
-//    private static boolean solvedWord;
-//    private static boolean youDied;
     private static Scanner scan = new Scanner(System.in);
     HangMan(){
         InputController ic = new InputController();
