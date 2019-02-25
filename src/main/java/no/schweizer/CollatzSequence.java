@@ -17,7 +17,7 @@ class CollatzSequence {
         char letter;
         for (;play;){
         n = ic.simpleDigitInput("Please enter the number you would like to start the sequence with: ", 0,0,false);
-        int ten = 1;
+        int ten = 0;
         int high = n;
         for (int i = 0;n != 1;i++){
             if (ten == 10){
@@ -38,6 +38,9 @@ class CollatzSequence {
             }
             ten++;
             if (n == 1){
+                if (ten == 10){
+                    System.out.println();
+                }
                 System.out.printf("%-8d",n);
                 System.out.println();
                 System.out.println("Sequence completed after "+i+" steps. Highest number was: "+high);

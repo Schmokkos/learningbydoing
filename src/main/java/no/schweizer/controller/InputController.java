@@ -11,13 +11,13 @@ public class InputController {
         for (; ; ) {
             System.out.print(text);
             if (!scan.hasNextInt()) {
-                System.out.println("Invalid input.");
+                System.out.println("Invalid input (Only numbers allowed).");
                 scan.next();
                 continue;
             }
             int number = scan.nextInt();
             if (!allowzero && number == 0){
-                System.out.println("Invalid input.");
+                System.out.println("Invalid input (Zero not allowed).");
                 continue;
             }
             if (allowzero && number == 0){
@@ -33,6 +33,28 @@ public class InputController {
                 System.out.println("Only a number between " + lowlimit + " and " + highlimit + " is allowed");
             }
 
+        }
+    }
+
+    public char simpleCharInput(String text, boolean onlyuppercase){
+
+        Scanner scan = new Scanner(System.in);
+        char input;
+
+        for (; ; ){
+            System.out.print(text);
+            if (onlyuppercase){
+                input = scan.next().toUpperCase().charAt(0);
+            }
+            else {
+                input = scan.next().charAt(0);
+            }
+            if (!Character.isLetter(input)){
+                System.out.println("Invalid input (Only letters allowed).");
+            }
+            else {
+                return input;
+            }
         }
     }
 }
