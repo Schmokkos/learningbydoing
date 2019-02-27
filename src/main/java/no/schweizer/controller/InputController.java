@@ -57,4 +57,27 @@ public class InputController {
             }
         }
     }
+
+    public String simpleStringInput(String text, boolean allownumbers){
+
+        Scanner scan = new Scanner(System.in);
+        String input;
+
+        for (; ; ){
+            System.out.print(text);
+            input = scan.next();
+            if (allownumbers){
+                if (!input.matches("[a-zA-Z0-9æøåÆØÅ]+")){
+                    System.out.println("Invalid input (Only letters and numbers allowed).");
+                }
+                else return input;
+            }
+            else {
+                if (!input.matches("[a-zA-zæøåÆØÅ]+")){
+                    System.out.println("Invalid input (Only letters allowed).");
+                }
+                else return input;
+            }
+        }
+    }
 }

@@ -57,4 +57,22 @@ public class ResultatController {
             return false;
         }
     }
+
+    public boolean didThePlayerLoose(int[] array){
+        int total = 0;
+        for (int a:array
+             ) {
+            total = total + a;
+        }
+        return (total == 1);
+    }
+
+    public boolean didThePlayerWin(int[] array){
+        int total = 0;
+        for (int a:array
+        ) {
+            total = total + a;
+        }
+        return (total < 1);
+    }
 }
