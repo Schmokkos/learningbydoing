@@ -1,16 +1,18 @@
 package no.schweizer;
 
 import no.schweizer.controller.InputController;
+import no.schweizer.controller.ResultatController;
 
 import java.util.Random;
 
 class NimGame {
 
-    private static String turn;
+//    private static String turn;
 
     NimGame(int players){
 
         InputController ic = new InputController();
+        ResultatController rc = new ResultatController();
         System.out.println("Welcome to NIM Game 1.0 :)");
         System.out.println("*******************");
 
@@ -25,7 +27,7 @@ class NimGame {
         }
 
         //Decide the number of piles
-        int noofpiles = ic.simpleDigitInput("Enter the number of piles you want to play with, normalt is 3 but you can play with as many as 5: ", 2, 5, false);
+        int noofpiles = ic.simpleDigitInput("Enter the number of piles you want to play with, a normal game is 3 but you can play with as many as 5: ", 2, 5, false);
         char[] piles = new char[noofpiles];
         byte[] size = new byte[noofpiles];
         switch (noofpiles){
@@ -58,11 +60,17 @@ class NimGame {
 
         //Picking who goes first
         Random rnum = new Random();
+        String turn;
         if (rnum.nextBoolean()){
             turn = player1;
         }
         else turn = player2;
         System.out.println(turn+" goes first...");
+        System.out.println();
+
+        //Setting the needed variables to make moves
+        char fromPile;
+        int removeObjects;
 
         //here goes...
         byte max;
@@ -76,9 +84,132 @@ class NimGame {
                     }
             }
             //Printing the current state of the piles
-            for (int i = 0; i < max; i++){
-
+            for (int i = 1; i <= max; max--){
+                System.out.print("     ");
+                switch (noofpiles){
+                    case 2:
+                        if (size[0] >= max){
+                            System.out.print("* ");
+                        }
+                        else System.out.print("  ");
+                        if (size[1] >= max){
+                            System.out.print("* ");
+                        }
+                        else System.out.print("  ");
+                        break;
+                    case 3:
+                        if (size[0] >= max){
+                            System.out.print("* ");
+                        }
+                        else System.out.print("  ");
+                        if (size[1] >= max){
+                            System.out.print("* ");
+                        }
+                        else System.out.print("  ");
+                        if (size[2] >= max){
+                            System.out.print("* ");
+                        }
+                        else System.out.print("  ");
+                        break;
+                    case 4:
+                        if (size[0] >= max){
+                            System.out.print("* ");
+                        }
+                        else System.out.print("  ");
+                        if (size[1] >= max){
+                            System.out.print("* ");
+                        }
+                        else System.out.print("  ");
+                        if (size[2] >= max){
+                            System.out.print("* ");
+                        }
+                        else System.out.print("  ");
+                        if (size[3] >= max){
+                            System.out.print("* ");
+                        }
+                        else System.out.print("  ");
+                        break;
+                    case 5:
+                        if (size[0] >= max){
+                            System.out.print("* ");
+                        }
+                        else System.out.print("  ");
+                        if (size[1] >= max){
+                            System.out.print("* ");
+                        }
+                        else System.out.print("  ");
+                        if (size[2] >= max){
+                            System.out.print("* ");
+                        }
+                        else System.out.print("  ");
+                        if (size[3] >= max){
+                            System.out.print("* ");
+                        }
+                        else System.out.print("  ");
+                        if (size[4] >= max){
+                            System.out.print("* ");
+                        }
+                        else System.out.print("  ");
+                }
+                System.out.println();
             }
+            //Printing the names of the piles
+            System.out.print("     ");
+            for (char c:piles
+                 ) {
+                System.out.print(c+" ");
+            }
+            System.out.println();
+            //TODO Here we should check if the player has won...
+
+            //Getting next move from player
+
+            //TODO Here is where the Computer player can do its move.
+
+            //First which pile
+            for (; ; ) {
+                fromPile = ic.simpleCharInput(turn + "Select the pile you would like to remove objects from: ", true);
+                //Checking if the defined letter is a valid pile
+                if (rc.isLetterInWord(fromPile, piles)){
+                    //Checking if there are any objects left in the pile
+                    if (fromPile == 'A'){
+                        if (size[0] == 0){
+                            System.out.println("That pile is already empty...");
+                            continue;
+                        }
+                        break;
+                    }
+                    if (fromPile == 'B'){
+                        if (size[1] == 0){
+                            System.out.println("That pile is already empty...");
+                            continue;
+                        }
+                    }
+                    if (fromPile == 'C'){
+                        if (size[2] == 0){
+                            System.out.println("That pile is already empty...");
+                            continue;
+                        }
+                    }
+                    if (fromPile == 'D'){
+                        if (size[3] == 0){
+                            System.out.println("That pile is already empty...");
+                            continue;
+                        }
+                    }
+                    if (fromPile == 'E'){
+                        if (size[4] == 0){
+                            System.out.println("That pile is already empty...");
+                            continue;
+                        }
+                    }
+                }
+                System.out.println("That is not a valid pile.");
+            }
+            //Then how many object player wants to remove from piles
+
+            //temp break to end loop for testing. To be removed
+            break;
         }
     }
 }
