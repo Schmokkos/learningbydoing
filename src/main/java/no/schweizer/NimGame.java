@@ -29,7 +29,7 @@ class NimGame {
         //Decide the number of piles
         int noofpiles = ic.simpleDigitInput("Enter the number of piles you want to play with, a normal game is 3 but you can play with as many as 5: ", 2, 5, false);
         char[] piles = new char[noofpiles];
-        byte[] size = new byte[noofpiles];
+        int[] size = new int[noofpiles];
         switch (noofpiles){
             case 5:
                 piles[4] = 'E';
@@ -66,18 +66,19 @@ class NimGame {
         }
         else turn = player2;
         System.out.println(turn+" goes first...");
-        System.out.println();
 
         //Setting the needed variables to make moves
         char fromPile;
-        int removeObjects;
+        int objectsInPile;
+        int removeFromPile;
 
         //here goes...
-        byte max;
+        int max;
         for (; ;){
+            System.out.println();
             //Resetting "max" and then checking for and setting it to the biggest value in the "size" array.
             max = 0;
-            for (byte nr:size
+            for (int nr:size
                  ) {
                     if (nr > max){
                         max = nr;
@@ -160,15 +161,32 @@ class NimGame {
                 System.out.print(c+" ");
             }
             System.out.println();
-            //TODO Here we should check if the player has won...
+
+            //TODO Here we should check if the player has won/lost...
+            if (rc.didThePlayerWin(size)){
+                System.out.println("Player "+turn+" is the Winner!! :)");
+                break;
+            }
+            if (rc.didThePlayerLoose(size)){
+                String winner;
+                if (turn.equals(player1)){
+                    winner = player2;
+                }
+                else{
+                    winner = player1;
+                }
+                System.out.println(turn+", you have to take the remaining object, so you lose!");
+                System.out.println(winner+" is the Winner!! :)");
+                break;
+            }
 
             //Getting next move from player
 
-            //TODO Here is where the Computer player can do its move.
+            //TODO Here is where the Computer player can do its move and the "continue;" to restart the loop.
 
             //First which pile
             for (; ; ) {
-                fromPile = ic.simpleCharInput(turn + "Select the pile you would like to remove objects from: ", true);
+                fromPile = ic.simpleCharInput(turn + "! Select the pile you would like to remove objects from: ", true);
                 //Checking if the defined letter is a valid pile
                 if (rc.isLetterInWord(fromPile, piles)){
                     //Checking if there are any objects left in the pile
@@ -177,6 +195,7 @@ class NimGame {
                             System.out.println("That pile is already empty...");
                             continue;
                         }
+                        objectsInPile = size[0];
                         break;
                     }
                     if (fromPile == 'B'){
@@ -184,32 +203,64 @@ class NimGame {
                             System.out.println("That pile is already empty...");
                             continue;
                         }
+                        objectsInPile = size[1];
+                        break;
                     }
                     if (fromPile == 'C'){
                         if (size[2] == 0){
                             System.out.println("That pile is already empty...");
                             continue;
                         }
+                        objectsInPile = size[2];
+                        break;
                     }
                     if (fromPile == 'D'){
                         if (size[3] == 0){
                             System.out.println("That pile is already empty...");
                             continue;
                         }
+                        objectsInPile = size[3];
+                        break;
                     }
                     if (fromPile == 'E'){
                         if (size[4] == 0){
                             System.out.println("That pile is already empty...");
                             continue;
                         }
+                        objectsInPile = size[4];
+                        break;
                     }
                 }
                 System.out.println("That is not a valid pile.");
             }
             //Then how many object player wants to remove from piles
+            removeFromPile = ic.simpleDigitInput("How many objects would you like to remove from pile "+fromPile+": ",1,objectsInPile,false);
+
+            //Removing the objects from the pile
+            if (fromPile == 'A'){
+                size[0] = (size[0] - removeFromPile);
+            }
+            if (fromPile == 'B'){
+                size[1] = (size[1] - removeFromPile);
+            }
+            if (fromPile == 'C'){
+                size[2] = (size[2] - removeFromPile);
+            }
+            if (fromPile == 'D'){
+                size[3] = (size[3] - removeFromPile);
+            }
+            if (fromPile == 'E'){
+                size[4] = (size[4] - removeFromPile);
+            }
+
+            //Switching to the next players turn
+            if (turn.equals(player1)){
+                turn = player2;
+            }
+            else turn = player1;
 
             //temp break to end loop for testing. To be removed
-            break;
+            //break;
         }
     }
 }
