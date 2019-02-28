@@ -7,8 +7,6 @@ import java.util.Random;
 
 class NimGame {
 
-//    private static String turn;
-
     NimGame(int players){
 
         InputController ic = new InputController();
@@ -162,7 +160,7 @@ class NimGame {
             }
             System.out.println();
 
-            //TODO Here we should check if the player has won/lost...
+            //Checking if a player has won or lost.
             if (rc.didThePlayerWin(size)){
                 System.out.println("Player "+turn+" is the Winner!! :)");
                 break;
@@ -181,8 +179,7 @@ class NimGame {
             }
 
             //Getting next move from player
-
-            //TODO Here is where the Computer player can do its move and the "continue;" to restart the loop.
+            //TODO Here is where the Computer player can do its move and the "continue;" to restart the loop. Remember to switch player
 
             //First which pile
             for (; ; ) {
@@ -258,9 +255,6 @@ class NimGame {
                 turn = player2;
             }
             else turn = player1;
-
-            //temp break to end loop for testing. To be removed
-            //break;
         }
     }
 }
