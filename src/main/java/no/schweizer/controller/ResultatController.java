@@ -47,7 +47,7 @@ public class ResultatController {
         return (wrong >= limit);
     }
 
-    boolean isCalcCorrect(int num1, int num2){
+    public boolean isCalcCorrect(int num1, int num2){
         if (num1==num2){
             System.out.println("Correct!");
             return true;
