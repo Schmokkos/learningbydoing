@@ -43,7 +43,7 @@ public class ArtificialIntelligence {
                 if (array[i] == max){
                     valg.add(0,i);
                     valg.add(1,2);
-                    System.out.println("Nimsum: "+nimsum+". Lategame: "+lategame+"");
+//                    System.out.println("Nimsum: "+nimsum+". Lategame: "+lategame+"");
                     return valg;
                 }
             }
@@ -54,7 +54,7 @@ public class ArtificialIntelligence {
                 if (array[i] >= 2){
                     valg.add(0,i);
                     valg.add(1,1);
-                    System.out.println("Nimsum: "+nimsum+". Lategame: "+lategame+"");
+//                    System.out.println("Nimsum: "+nimsum+". Lategame: "+lategame+"");
                     return valg;
                 }
             }
@@ -65,7 +65,7 @@ public class ArtificialIntelligence {
                 if (array[i] >= 2){
                     valg.add(0,i);
                     valg.add(1,array[i]);
-                    System.out.println("Nimsum: "+nimsum+". Lategame: "+lategame+"");
+//                    System.out.println("Nimsum: "+nimsum+". Lategame: "+lategame+"");
                     return valg;
                 }
             }
@@ -75,7 +75,7 @@ public class ArtificialIntelligence {
             if (array[i] >= 2){
                 valg.add(0,i);
                 valg.add(1,array[i]-1);
-                System.out.println("Nimsum: "+nimsum+". Lategame: "+lategame+"");
+//                System.out.println("Nimsum: "+nimsum+". Lategame: "+lategame+"");
                 return valg;
             }
         }
@@ -83,7 +83,7 @@ public class ArtificialIntelligence {
             if (array[i] == 1){
                 valg.add(0,i);
                 valg.add(1,1);
-                System.out.println("Nimsum: "+nimsum+". Lategame: "+lategame+"");
+//                System.out.println("Nimsum: "+nimsum+". Lategame: "+lategame+"");
                 return valg;
             }
         }
