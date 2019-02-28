@@ -1,8 +1,10 @@
 package no.schweizer;
 
+import no.schweizer.classes.ArtificialIntelligence;
 import no.schweizer.controller.InputController;
 import no.schweizer.controller.ResultatController;
 
+import java.util.List;
 import java.util.Random;
 
 class NimGame {
@@ -11,6 +13,7 @@ class NimGame {
 
         InputController ic = new InputController();
         ResultatController rc = new ResultatController();
+        ArtificialIntelligence ai = new ArtificialIntelligence();
         System.out.println("Welcome to NIM Game 1.0 :)");
         System.out.println("*******************");
 
@@ -177,62 +180,68 @@ class NimGame {
                 System.out.println(winner+" is the Winner!! :)");
                 break;
             }
-
-            //Getting next move from player
-            //TODO Here is where the Computer player can do its move and the "continue;" to restart the loop. Remember to switch player
-
-            //First which pile
-            for (; ; ) {
-                fromPile = ic.simpleCharInput(turn + "! Select the pile you would like to remove objects from: ", true);
-                //Checking if the defined letter is a valid pile
-                if (rc.isLetterInWord(fromPile, piles)){
-                    //Checking if there are any objects left in the pile
-                    if (fromPile == 'A'){
-                        if (size[0] == 0){
-                            System.out.println("That pile is already empty...");
-                            continue;
-                        }
-                        objectsInPile = size[0];
-                        break;
-                    }
-                    if (fromPile == 'B'){
-                        if (size[1] == 0){
-                            System.out.println("That pile is already empty...");
-                            continue;
-                        }
-                        objectsInPile = size[1];
-                        break;
-                    }
-                    if (fromPile == 'C'){
-                        if (size[2] == 0){
-                            System.out.println("That pile is already empty...");
-                            continue;
-                        }
-                        objectsInPile = size[2];
-                        break;
-                    }
-                    if (fromPile == 'D'){
-                        if (size[3] == 0){
-                            System.out.println("That pile is already empty...");
-                            continue;
-                        }
-                        objectsInPile = size[3];
-                        break;
-                    }
-                    if (fromPile == 'E'){
-                        if (size[4] == 0){
-                            System.out.println("That pile is already empty...");
-                            continue;
-                        }
-                        objectsInPile = size[4];
-                        break;
-                    }
-                }
-                System.out.println("That is not a valid pile.");
+            //Checking if player 2 is a computer and if so getting the AI to decide what to do
+            List<Integer> aichoice;
+            if (turn.equals("Computer")){
+                aichoice = ai.nimComputer(size);
+                fromPile = piles[aichoice.get(0)];
+                removeFromPile = aichoice.get(1);
+                System.out.println("Computer removes "+removeFromPile+" objects from pile "+fromPile);
             }
-            //Then how many object player wants to remove from piles
-            removeFromPile = ic.simpleDigitInput("How many objects would you like to remove from pile "+fromPile+": ",1,objectsInPile,false);
-
+            else {
+                //Getting next move from player
+                //First which pile
+                for (; ; ) {
+                    fromPile = ic.simpleCharInput(turn + "! Select the pile you would like to remove objects from: ", true);
+                    //Checking if the defined letter is a valid pile
+                    if (rc.isLetterInWord(fromPile, piles)) {
+                        //Checking if there are any objects left in the pile
+                        if (fromPile == 'A') {
+                            if (size[0] == 0) {
+                                System.out.println("That pile is already empty...");
+                                continue;
+                            }
+                            objectsInPile = size[0];
+                            break;
+                        }
+                        if (fromPile == 'B') {
+                            if (size[1] == 0) {
+                                System.out.println("That pile is already empty...");
+                                continue;
+                            }
+                            objectsInPile = size[1];
+                            break;
+                        }
+                        if (fromPile == 'C') {
+                            if (size[2] == 0) {
+                                System.out.println("That pile is already empty...");
+                                continue;
+                            }
+                            objectsInPile = size[2];
+                            break;
+                        }
+                        if (fromPile == 'D') {
+                            if (size[3] == 0) {
+                                System.out.println("That pile is already empty...");
+                                continue;
+                            }
+                            objectsInPile = size[3];
+                            break;
+                        }
+                        if (fromPile == 'E') {
+                            if (size[4] == 0) {
+                                System.out.println("That pile is already empty...");
+                                continue;
+                            }
+                            objectsInPile = size[4];
+                            break;
+                        }
+                    }
+                    System.out.println("That is not a valid pile.");
+                }
+                //Then how many object player wants to remove from piles
+                removeFromPile = ic.simpleDigitInput("How many objects would you like to remove from pile " + fromPile + ": ", 1, objectsInPile, false);
+            }
             //Removing the objects from the pile
             if (fromPile == 'A'){
                 size[0] = (size[0] - removeFromPile);
