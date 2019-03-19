@@ -4,6 +4,7 @@ import no.schweizer.classes.ArtificialIntelligence;
 import no.schweizer.controller.InputController;
 import no.schweizer.controller.ResultatController;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -18,17 +19,17 @@ class NimGame {
         System.out.println("*******************");
 
         //Name the players
-        String player1 = ic.simpleStringInput("Player 1, enter your name: ", false);
-        String player2;
+        final String player1 = ic.simpleInput("Player 1, enter your name: ", "Invalid input (Only a name containing lettes allowed).", "(?i)^[A-ZÆØÅ]+$");
+        final String player2;
         if (players == 2){
-            player2 = ic.simpleStringInput("Player 2, enter your name: ", false);
+            player2 = ic.simpleInput("Player 2, enter your name: ", "Invalid input (Only a name containing lettes allowed).", "(?i)^[A-ZÆØÅ]+$");
         }
         else {
             player2 = "Computer";
         }
 
         //Decide the number of piles
-        int noofpiles = ic.simpleDigitInput("Enter the number of piles you want to play with, a normal game is 3 but you can play with as many as 5: ", 2, 5, false);
+        final int noofpiles = Integer.parseInt(ic.simpleInput("Enter the number of piles you want to play with, a normal game is 3 but you can play with as many as 5: ", "Invalid input (Only a number between 2 and 5 is allowed).", "^[2-5]$"));
         char[] piles = new char[noofpiles];
         int[] size = new int[noofpiles];
         switch (noofpiles){
@@ -47,7 +48,7 @@ class NimGame {
                 size[1] = 4;
                 size[0] = 3;
                 break;
-                default: throw new IllegalArgumentException("Value difficulty was "+noofpiles+" expected int 2-5");
+                default: throw new IllegalArgumentException("Value noofpiles was "+noofpiles+" expected int 2-5");
         }
 
         //Display the rules:
@@ -71,13 +72,15 @@ class NimGame {
         //Setting the needed variables to make moves
         char fromPile;
         int objectsInPile;
+        StringBuilder pilesWithObjects = new StringBuilder();
         int removeFromPile;
+        int fromPileLetterIndex;
 
         //here goes...
         int max;
-        for (; ;){
+        do {
             System.out.println();
-            //Resetting "max" and then checking for and setting it to the biggest value in the "size" array.
+            //Resetting "max" and setting it to the biggest value in the "size" array. This limits the height of the method that prints the current state
             max = 0;
             for (int nr:size
                  ) {
@@ -85,73 +88,20 @@ class NimGame {
                         max = nr;
                     }
             }
+            //Checking if the player has won before printing the state.
+            if (rc.didThePlayerWin(size)){
+                System.out.println("The last object was removed, Player "+turn+" is the Winner!! :)");
+                break;
+            }
             //Printing the current state of the piles
             for (int i = 1; i <= max; max--){
                 System.out.print("     ");
-                switch (noofpiles){
-                    case 2:
-                        if (size[0] >= max){
-                            System.out.print("* ");
-                        }
-                        else System.out.print("  ");
-                        if (size[1] >= max){
-                            System.out.print("* ");
-                        }
-                        else System.out.print("  ");
-                        break;
-                    case 3:
-                        if (size[0] >= max){
-                            System.out.print("* ");
-                        }
-                        else System.out.print("  ");
-                        if (size[1] >= max){
-                            System.out.print("* ");
-                        }
-                        else System.out.print("  ");
-                        if (size[2] >= max){
-                            System.out.print("* ");
-                        }
-                        else System.out.print("  ");
-                        break;
-                    case 4:
-                        if (size[0] >= max){
-                            System.out.print("* ");
-                        }
-                        else System.out.print("  ");
-                        if (size[1] >= max){
-                            System.out.print("* ");
-                        }
-                        else System.out.print("  ");
-                        if (size[2] >= max){
-                            System.out.print("* ");
-                        }
-                        else System.out.print("  ");
-                        if (size[3] >= max){
-                            System.out.print("* ");
-                        }
-                        else System.out.print("  ");
-                        break;
-                    case 5:
-                        if (size[0] >= max){
-                            System.out.print("* ");
-                        }
-                        else System.out.print("  ");
-                        if (size[1] >= max){
-                            System.out.print("* ");
-                        }
-                        else System.out.print("  ");
-                        if (size[2] >= max){
-                            System.out.print("* ");
-                        }
-                        else System.out.print("  ");
-                        if (size[3] >= max){
-                            System.out.print("* ");
-                        }
-                        else System.out.print("  ");
-                        if (size[4] >= max){
-                            System.out.print("* ");
-                        }
-                        else System.out.print("  ");
+                for (int pile:size
+                     ) {
+                    if (pile >= max){
+                        System.out.print("* ");
+                    }
+                    else System.out.print("  ");
                 }
                 System.out.println();
             }
@@ -163,11 +113,7 @@ class NimGame {
             }
             System.out.println();
 
-            //Checking if a player has won or lost.
-            if (rc.didThePlayerWin(size)){
-                System.out.println("Player "+turn+" is the Winner!! :)");
-                break;
-            }
+            //Checking if a player has to remove the last object and thus lost.
             if (rc.didThePlayerLoose(size)){
                 String winner;
                 if (turn.equals(player1)){
@@ -182,81 +128,35 @@ class NimGame {
             }
             //Checking if player 2 is a computer and if so getting the AI to decide what to do
             List<Integer> aichoice;
-            if (turn.equals("Computer")){
+            if (turn.equals("Computer") && players == 1){
                 aichoice = ai.nimComputer(size);
                 fromPile = piles[aichoice.get(0)];
                 removeFromPile = aichoice.get(1);
                 System.out.println("Computer removes "+removeFromPile+" objects from pile "+fromPile);
+                fromPileLetterIndex = Arrays.binarySearch(piles, fromPile);
             }
             else {
                 //Getting next move from player
-                //First which pile
-                for (; ; ) {
-                    fromPile = ic.simpleCharInput(turn + "! Select the pile you would like to remove objects from: ", true);
-                    //Checking if the defined letter is a valid pile
-                    if (rc.isLetterInWord(fromPile, piles)) {
-                        //Checking if there are any objects left in the pile
-                        if (fromPile == 'A') {
-                            if (size[0] == 0) {
-                                System.out.println("That pile is already empty...");
-                                continue;
-                            }
-                            objectsInPile = size[0];
-                            break;
-                        }
-                        if (fromPile == 'B') {
-                            if (size[1] == 0) {
-                                System.out.println("That pile is already empty...");
-                                continue;
-                            }
-                            objectsInPile = size[1];
-                            break;
-                        }
-                        if (fromPile == 'C') {
-                            if (size[2] == 0) {
-                                System.out.println("That pile is already empty...");
-                                continue;
-                            }
-                            objectsInPile = size[2];
-                            break;
-                        }
-                        if (fromPile == 'D') {
-                            if (size[3] == 0) {
-                                System.out.println("That pile is already empty...");
-                                continue;
-                            }
-                            objectsInPile = size[3];
-                            break;
-                        }
-                        if (fromPile == 'E') {
-                            if (size[4] == 0) {
-                                System.out.println("That pile is already empty...");
-                                continue;
-                            }
-                            objectsInPile = size[4];
-                            break;
-                        }
+                //First checking which piles have objects in them and storing them in pilesWithObjects.
+                pilesWithObjects.setLength(0);
+                for (int i = 0; i <= size.length-1; i++){
+                    if (size[i] != 0){
+                        pilesWithObjects.append(piles[i]);
                     }
-                    System.out.println("That is not a valid pile.");
                 }
-                //Then how many object player wants to remove from piles
-                removeFromPile = ic.simpleDigitInput("How many objects would you like to remove from pile " + fromPile + ": ", 1, objectsInPile, false);
+                //Then get the pile from the player that the player wants to remove objects from and setting objectsInPile to how many objects are left in the pile
+                fromPile = ic.simpleInput(turn + "! Select the pile you would like to remove objects from: ", "Invalid input (Enter a single letter representing an existing pile ("+pilesWithObjects+")).", "(?i)^["+pilesWithObjects+"]$").toUpperCase().charAt(0);
+                fromPileLetterIndex = Arrays.binarySearch(piles, fromPile);
+                objectsInPile = size[fromPileLetterIndex];
+                //Then how many object player wants to remove from that pile
+                removeFromPile = Integer.parseInt(ic.simpleInput("How many objects would you like to remove from pile " + fromPile + ": ", "Invalid input (There are only "+objectsInPile+" objects left).", "^[1-"+objectsInPile+"]$"));
             }
             //Removing the objects from the pile
-            if (fromPile == 'A'){
-                size[0] = (size[0] - removeFromPile);
+            if (fromPileLetterIndex == -1){
+                throw new IllegalStateException("Could not find the letter "+fromPile+" in the piles-array.");
             }
-            if (fromPile == 'B'){
-                size[1] = (size[1] - removeFromPile);
-            }
-            if (fromPile == 'C'){
-                size[2] = (size[2] - removeFromPile);
-            }
-            if (fromPile == 'D'){
-                size[3] = (size[3] - removeFromPile);
-            }
-            if (fromPile == 'E'){
-                size[4] = (size[4] - removeFromPile);
+            else {
+                size[fromPileLetterIndex] -= removeFromPile;
             }
 
             //Switching to the next players turn
@@ -265,5 +165,6 @@ class NimGame {
             }
             else turn = player1;
         }
+        while (true);
     }
 }
