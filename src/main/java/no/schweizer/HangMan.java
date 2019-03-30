@@ -12,8 +12,7 @@ class HangMan {
         InputController ic = new InputController();
         System.out.println("Welcome to Hang Man 1.1 :)");
         System.out.println("*******************");
-        int wordLenght = ic.simpleDigitInput("Word or sentence? Enter 0 (zero) for sentence, or the length of the word you want (between 5-7): ",5,7,true);
-
+        int wordLenght = Integer.parseInt(ic.simpleInput("Word or sentence? Enter 0 (zero) for sentence, or the length of the word you want (between 5-7): ", "Invalid input (Only the numbers 0, 5, 6 or 7 is allowed).", "^[05-7]$"));
         //Generating a word/sentence and turning it into arrays
         QuestionController qc = new QuestionController();
         char[] wordarray = qc.createWord(wordLenght).toUpperCase().toCharArray();
@@ -33,7 +32,7 @@ class HangMan {
         ResultatController rc = new ResultatController();
         char letter;
         do {
-            letter = ic.simpleCharInput("Guess your next letter: ", true);
+            letter = ic.simpleInput("Guess your next letter: ", "Please only input a simgle letter (A-Å).", "(?i)^[A-ZÆØÅ]$").toUpperCase().charAt(0);
             System.out.println();
 
             if (rc.isLetterInWord(letter,wordarray)){

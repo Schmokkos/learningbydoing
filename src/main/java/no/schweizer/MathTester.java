@@ -17,8 +17,8 @@ class MathTester {
 
         System.out.println("Welcome to Math Tester 1.0 :)");
         System.out.println("*******************");
-        int numberOfQuestions = ic.simpleDigitInput("Enter the number of questions you want: ", 0, 0, false);
-        int difficulty = ic.simpleDigitInput("Enter the desired difficulty (1-5): ", 1, 5, false);
+        int numberOfQuestions = Integer.parseInt(ic.simpleInput("Enter the number of questions you want: ","Invalid input (Only a number is allowed).", "^[0-9]+$"));
+        int difficulty = Integer.parseInt(ic.simpleInput("Enter the desired difficulty: ","Invalid input (Only a number between 1 and 5 is allowed).", "^[1-5]$"));
 
         boolean result;
         QuestionController qc = new QuestionController();
