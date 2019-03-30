@@ -32,6 +32,9 @@ public class AppSelector {
         if (input == 5){
             new NimGame(1);
         }
+        if (input == 6){
+            new no.schweizer.chess.Chess();
+        }
         else {
             System.out.println("Bye...");
         }
