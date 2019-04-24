@@ -8,7 +8,7 @@ public class InputController {
 
     public final String simpleInput(String text, String errortext, String rules){
         System.out.print(text);
-        String a = scan.next();
+        String a = scan.nextLine();
         if (!a.matches(rules)){
             System.out.println(errortext);
             return simpleInput(text, errortext, rules);

@@ -11,6 +11,7 @@ public class AppSelector {
         System.out.println("3 - Collatz Sequence");
         System.out.println("4 - NIM (Players vs Player)");
         System.out.println("5 - NIM (Player vs Computer)");
+        System.out.println("6 - Box Stacker");
         System.out.println("Anything else - Exit");
         System.out.print("Input app number:");
         int input = 0;
@@ -20,17 +21,20 @@ public class AppSelector {
         if (input == 1){
             new MathTester();
         }
-        if (input == 2){
+        else if (input == 2){
             new HangMan();
         }
-        if (input == 3){
+        else if (input == 3){
             new CollatzSequence();
         }
-        if (input == 4){
+        else if (input == 4){
             new NimGame(2);
         }
-        if (input == 5){
+        else if (input == 5){
             new NimGame(1);
+        }
+        else if (input == 6){
+            new BoxStacker();
         }
         else {
             System.out.println("Bye...");
